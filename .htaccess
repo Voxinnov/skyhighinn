@@ -1,0 +1,26 @@
+# ----------------------------------------------------------------------
+# Sky High Inn - Hostinger / LiteSpeed Production .htaccess
+# ----------------------------------------------------------------------
+
+# Disable directory browsing
+Options -Indexes
+
+# Set default character encoding
+AddDefaultCharset UTF-8
+
+# Protect sensitive files and extensions from direct HTTP access
+<FilesMatch "(^#.*#|\.(bak|conf|dist|fla|in[ci]|log|psd|sh|sql|sw[op]|env)|~)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Protect hidden files and directories
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule "(^|/)\.(?!well-known)" - [F]
+</IfModule>
